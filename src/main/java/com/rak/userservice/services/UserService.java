@@ -10,6 +10,7 @@ import com.rak.userservice.models.Token;
 import com.rak.userservice.models.User;
 import com.rak.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -19,12 +20,13 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserResponseDto signup(SignupRequestDto signupRequestDto) {
         User user = new User();
         user.setName(signupRequestDto.getName());
         user.setEmail(signupRequestDto.getEmail());
-        user.setHashedPassword(signupRequestDto.getPassword());
+        user.setHashedPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
         return UserResponseDto.from(userRepository.save(user));
     }
 
@@ -33,7 +35,7 @@ public class UserService {
         if (user == null) {
             throw new UserNotFoundException(123, "User not found!!");
         }
-        if (!user.getHashedPassword().equals(loginRequestDto.getPassword())) {
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getHashedPassword())) {
             throw new UserNotFoundException(234, "Wrong password!!");
         }
         Token token = new Token();
