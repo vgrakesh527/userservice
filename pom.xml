@@ -54,7 +54,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version> <!-- replace with the latest version -->
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>10.21.0</version>
@@ -63,7 +63,7 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 			<version>10.21.0</version>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 
 	<build>

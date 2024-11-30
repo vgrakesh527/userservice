@@ -12,13 +12,13 @@ import java.util.List;
 public class UserResponseDto {
     private String name;
     private String email;
-    private List<Role> roles;
+    private List<String> roles;
 
     public static UserResponseDto from(User user) {
         UserResponseDto dto = new UserResponseDto();
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-        dto.setRoles(user.getRoles());
+        dto.setRoles(user.getRoles() != null ? user.getRoles().stream().map(Role::getValue).toList() : null);
         return dto;
     }
 }
