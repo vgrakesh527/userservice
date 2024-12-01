@@ -15,7 +15,7 @@ public class ExceptionHandler {
         userNotFoundMessageDto.setMessage(userNotFoundException.getMessage());
         return new ResponseEntity<>(userNotFoundMessageDto, HttpStatus.NOT_FOUND);
     }
-
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<TokenNotFoundMessageDto> tokenNotFoundMessage(TokenNotFoundException tokenNotFoundException) {
         TokenNotFoundMessageDto tokenNotFoundMessageDto = new TokenNotFoundMessageDto();
         tokenNotFoundMessageDto.setErrorCode(tokenNotFoundException.getErrorCode());

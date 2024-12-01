@@ -12,6 +12,7 @@ import com.rak.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.UUID;
 
@@ -45,6 +46,10 @@ public class UserService {
     }
 
     public UserResponseDto validateToken(String token) throws TokenNotFoundException {
+        var response = tokenService.validateToken(token);
+        if(ObjectUtils.isEmpty(response)) {
+            throw new TokenNotFoundException(123, "Token not found!!");
+        }
         return tokenService.validateToken(token).getUser();
     }
 
